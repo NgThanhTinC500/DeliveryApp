@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:DeliveryApp/splash/splash_screen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -150,7 +151,12 @@ class _LoginPageState extends State<LoginPage> {
                         width: double.infinity,
                         height: 56,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => const SplashScreen()),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: _greenColor,
                             shape: RoundedRectangleBorder(
