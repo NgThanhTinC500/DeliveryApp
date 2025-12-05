@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:DeliveryApp/thanhtin/confirm.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
@@ -242,7 +243,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
       height: 55,
       child: ElevatedButton(
         onPressed: () {
-          // Xử lý thanh toán
+          // --- CODE CHUYỂN MÀN HÌNH ---
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ConfirmationScreen()),
+          );
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryGreen,

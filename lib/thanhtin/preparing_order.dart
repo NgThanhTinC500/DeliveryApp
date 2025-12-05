@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:DeliveryApp/thanhtin/chat_order.dart';
+import 'package:DeliveryApp/thanhtin/call_driver.dart';
 
-// Tên class này phải khớp với tên được gọi bên file congratulation.dart
 class OrderTrackingScreen extends StatelessWidget {
   const OrderTrackingScreen({super.key});
 
@@ -17,9 +18,9 @@ class OrderTrackingScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildHeader(context), // Truyền context vào để làm nút Back
+              _buildHeader(context),
               const SizedBox(height: 30),
-              _buildDriverInfo(),
+              _buildDriverInfo(context),
               const SizedBox(height: 20),
               const Divider(thickness: 1, color: Color(0xFFEEEEEE)),
               const SizedBox(height: 20),
@@ -56,14 +57,11 @@ class OrderTrackingScreen extends StatelessWidget {
     );
   }
 
-  // Sửa lại nút Back để có thể quay lại nếu muốn
   Widget _buildHeader(BuildContext context) {
     return Row(
       children: [
         GestureDetector(
-          onTap: () {
-            Navigator.pop(context); // Lệnh này để quay lại màn hình trước
-          },
+          onTap: () => Navigator.pop(context),
           child: Container(
             width: 40,
             height: 40,
@@ -83,7 +81,10 @@ class OrderTrackingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDriverInfo() {
+  // ------------------------------
+  // ⭐ CHỖ NÀY ĐÃ ĐƯỢC SỬA
+  // ------------------------------
+  Widget _buildDriverInfo(BuildContext context) {
     return Row(
       children: [
         Container(
@@ -104,15 +105,39 @@ class OrderTrackingScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("DAO GIA BAO", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: darkText)),
+              Text("DAO GIA BAO",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: darkText)),
               const SizedBox(height: 4),
               Text("Delivery guy", style: TextStyle(fontSize: 14, color: greyText)),
             ],
           ),
         ),
-        _buildActionButton(Icons.chat_bubble_outline),
+
+        // ⭐ NÚT CHAT — CÓ NAVIGATOR
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ChatScreen()),
+            );
+          },
+          child: _buildActionButton(Icons.chat_bubble_outline),
+        ),
+
         const SizedBox(width: 10),
-        _buildActionButton(Icons.phone),
+
+
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CallScreen()),
+            );
+          },
+          child: _buildActionButton(Icons.phone),
+        ),
+        // Nút gọi
+
       ],
     );
   }
@@ -126,6 +151,7 @@ class OrderTrackingScreen extends StatelessWidget {
     );
   }
 
+  // --------- Các phần dưới không đổi ----------
   Widget _buildStatusCard() {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -139,7 +165,13 @@ class OrderTrackingScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _buildTimelineItem(isActive: true, isFirst: true, isLast: false, title: "Preparing your order", subtitle: "We are preparing your food with magic and care", timeReq: "Time Req. 20mins"),
+          _buildTimelineItem(
+              isActive: true,
+              isFirst: true,
+              isLast: false,
+              title: "Preparing your order",
+              subtitle: "We are preparing your food with magic and care",
+              timeReq: "Time Req. 20mins"),
           _buildTimelineItem(isActive: false, isFirst: false, isLast: false, title: "Your order is on the way"),
           _buildTimelineItem(isActive: false, isFirst: false, isLast: true, title: "Your order has been delivered"),
         ],
@@ -147,7 +179,14 @@ class OrderTrackingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTimelineItem({required bool isActive, required bool isFirst, required bool isLast, required String title, String? subtitle, String? timeReq}) {
+  Widget _buildTimelineItem({
+    required bool isActive,
+    required bool isFirst,
+    required bool isLast,
+    required String title,
+    String? subtitle,
+    String? timeReq,
+  }) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,9 +195,20 @@ class OrderTrackingScreen extends StatelessWidget {
             children: [
               isActive
                   ? Icon(Icons.location_on, color: primaryGreen, size: 30)
-                  : Container(margin: const EdgeInsets.only(top: 4), width: 20, height: 20, decoration: BoxDecoration(color: const Color(0xFFF2F4F8), shape: BoxShape.circle)),
+                  : Container(
+                margin: const EdgeInsets.only(top: 4),
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(color: const Color(0xFFF2F4F8), shape: BoxShape.circle),
+              ),
               if (!isLast)
-                Expanded(child: Container(width: 2, color: isActive ? primaryGreen.withOpacity(0.2) : const Color(0xFFF2F4F8), margin: const EdgeInsets.symmetric(vertical: 4))),
+                Expanded(
+                  child: Container(
+                    width: 2,
+                    color: isActive ? primaryGreen.withOpacity(0.2) : const Color(0xFFF2F4F8),
+                    margin: const EdgeInsets.symmetric(vertical: 4),
+                  ),
+                ),
             ],
           ),
           const SizedBox(width: 15),
@@ -168,9 +218,21 @@ class OrderTrackingScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: TextStyle(fontSize: 16, fontWeight: isActive ? FontWeight.bold : FontWeight.normal, color: isActive ? darkText : const Color(0xFFBDBDBD))),
-                  if (isActive && subtitle != null) ...[const SizedBox(height: 6), Text(subtitle, style: TextStyle(fontSize: 13, color: greyText, height: 1.4))],
-                  if (isActive && timeReq != null) ...[const SizedBox(height: 8), Text(timeReq, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black54))],
+                  Text(
+                    title,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+                        color: isActive ? darkText : const Color(0xFFBDBDBD)),
+                  ),
+                  if (isActive && subtitle != null) ...[
+                    const SizedBox(height: 6),
+                    Text(subtitle, style: TextStyle(fontSize: 13, color: greyText, height: 1.4))
+                  ],
+                  if (isActive && timeReq != null) ...[
+                    const SizedBox(height: 8),
+                    Text(timeReq, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black54))
+                  ],
                 ],
               ),
             ),
@@ -222,8 +284,15 @@ class OrderTrackingScreen extends StatelessWidget {
               Container(
                 width: 70,
                 height: 70,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Colors.white, boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.15), blurRadius: 10, offset: const Offset(0, 4))]),
-                child: ClipRRect(borderRadius: BorderRadius.circular(15), child: Image.network(foods[index]['img']!, fit: BoxFit.cover)),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                  boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.15), blurRadius: 10, offset: const Offset(0, 4))],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.network(foods[index]['img']!, fit: BoxFit.cover),
+                ),
               ),
               const SizedBox(height: 8),
               Text(foods[index]['count']!, style: const TextStyle(fontWeight: FontWeight.bold)),

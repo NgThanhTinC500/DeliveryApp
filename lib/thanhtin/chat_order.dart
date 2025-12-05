@@ -73,15 +73,21 @@ class _ChatScreenState extends State<ChatScreen> {
       child: Row(
         children: [
           // Back Button
-          Container(
-            width: 45,
-            height: 45,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF2F4F8),
-              shape: BoxShape.circle,
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context);   // quay lại màn trước (OrderTrackingScreen)
+            },
+            child: Container(
+              width: 45,
+              height: 45,
+              decoration: BoxDecoration(
+                color: const Color(0xFFF2F4F8),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.arrow_back_ios_new, size: 20, color: Colors.black),
             ),
-            child: const Icon(Icons.arrow_back_ios_new, size: 20, color: Colors.black),
           ),
+
           const SizedBox(width: 20),
           // Title
           const Text(

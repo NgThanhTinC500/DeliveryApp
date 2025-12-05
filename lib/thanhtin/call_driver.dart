@@ -54,6 +54,8 @@ class CallScreen extends StatelessWidget {
 
                   // Avatar tròn nhỏ
                   Container(
+
+
                     padding: const EdgeInsets.all(4), // Viền trắng
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -106,19 +108,25 @@ class CallScreen extends StatelessWidget {
                       ),
 
                       // Nút Tắt máy (Màu đỏ - Có vòng tròn bao quanh)
-                      Container(
-                        padding: const EdgeInsets.all(15), // Độ dày của vòng tròn mờ
-                        decoration: BoxDecoration(
-                          color: Colors.redAccent.withOpacity(0.3), // Màu vòng tròn mờ
-                          shape: BoxShape.circle,
-                        ),
-                        child: _buildControlBtn(
-                          icon: Icons.call_end,
-                          bgColor: const Color(0xFFFF5252),
-                          iconColor: Colors.black,
-                          size: 70, // Nút giữa to hơn
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context); // ← quay về màn trước
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                            color: Colors.redAccent.withOpacity(0.3),
+                            shape: BoxShape.circle,
+                          ),
+                          child: _buildControlBtn(
+                            icon: Icons.call_end,
+                            bgColor: const Color(0xFFFF5252),
+                            iconColor: Colors.black,
+                            size: 70,
+                          ),
                         ),
                       ),
+
 
                       // Nút Loa ngoài (Speaker)
                       _buildControlBtn(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:DeliveryApp/thanhtin/preparing_order.dart';
 
 class ConfirmationScreen extends StatelessWidget {
   const ConfirmationScreen({super.key});
 
-  // Màu sắc chủ đạo từ thiết kế
   final Color primaryGreen = const Color(0xFF6CC51D);
   final Color darkText = const Color(0xFF1A1A1A);
   final Color greyText = const Color(0xFF9E9E9E);
@@ -18,13 +18,12 @@ class ConfirmationScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. Header
-              _buildHeader(),
+              // 1. Header - TRUYỀN CONTEXT VÀO ĐÂY
+              _buildHeader(context),
+
               const SizedBox(height: 30),
 
-              // 2. Danh sách món ăn (Items List)
-              // Sử dụng Expanded để phần danh sách có thể cuộn nếu dài,
-              // và đẩy phần thanh toán xuống dưới.
+              // 2. Danh sách món ăn
               Expanded(
                 child: ListView(
                   children: [
@@ -47,13 +46,13 @@ class ConfirmationScreen extends StatelessWidget {
                 ),
               ),
 
-              // 3. Thông tin thanh toán (Price Details)
+              // 3. Thông tin thanh toán
               const SizedBox(height: 20),
               _buildPriceDetails(),
 
               // 4. Nút Confirm
               const SizedBox(height: 30),
-              _buildConfirmButton(),
+              _buildConfirmButton(context),
             ],
           ),
         ),
@@ -63,17 +62,24 @@ class ConfirmationScreen extends StatelessWidget {
 
   // --- Widgets con ---
 
-  Widget _buildHeader() {
+  // BƯỚC 1: Thêm tham số 'BuildContext context'
+  Widget _buildHeader(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: 45,
-          height: 45,
-          decoration: BoxDecoration(
-            color: const Color(0xFFF2F4F8),
-            shape: BoxShape.circle,
+        // BƯỚC 2: Bọc trong GestureDetector để bắt sự kiện nhấn
+        GestureDetector(
+          onTap: () {
+            Navigator.pop(context); // Lệnh quay lại màn hình trước
+          },
+          child: Container(
+            width: 45,
+            height: 45,
+            decoration: BoxDecoration(
+              color: const Color(0xFFF2F4F8),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.arrow_back_ios_new, size: 20, color: Colors.black),
           ),
-          child: const Icon(Icons.arrow_back_ios_new, size: 20, color: Colors.black),
         ),
         const SizedBox(width: 20),
         Text(
@@ -100,7 +106,6 @@ class ConfirmationScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        // Hiệu ứng bóng nhẹ giống style card trong ảnh
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.05),
@@ -113,7 +118,6 @@ class ConfirmationScreen extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Ảnh món ăn
           Container(
             width: 80,
             height: 80,
@@ -126,8 +130,6 @@ class ConfirmationScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 15),
-
-          // Thông tin chi tiết
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,7 +138,7 @@ class ConfirmationScreen extends StatelessWidget {
                   title,
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w500, // Medium weight
+                    fontWeight: FontWeight.w500,
                     color: Colors.grey[800],
                   ),
                 ),
@@ -160,10 +162,8 @@ class ConfirmationScreen extends StatelessWidget {
               ],
             ),
           ),
-
-          // Số lượng
           Padding(
-            padding: const EdgeInsets.only(top: 40), // Căn chỉnh xuống dưới một chút
+            padding: const EdgeInsets.only(top: 40),
             child: Text(
               quantity,
               style: TextStyle(
@@ -185,8 +185,6 @@ class ConfirmationScreen extends StatelessWidget {
         const SizedBox(height: 15),
         _buildInfoRow("Discount:", "\$10"),
         const SizedBox(height: 15),
-
-        // Dòng Payment method có logo Mastercard
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -208,19 +206,16 @@ class ConfirmationScreen extends StatelessWidget {
                 Image.network(
                   'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png',
                   width: 30,
-                  height: 20, // Kích thước nhỏ cho icon
+                  height: 20,
                   fit: BoxFit.contain,
                 ),
               ],
             ),
           ],
         ),
-
         const SizedBox(height: 25),
         const Divider(color: Color(0xFFEEEEEE), thickness: 1),
         const SizedBox(height: 15),
-
-        // Tổng tiền
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -233,7 +228,7 @@ class ConfirmationScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: primaryGreen, // Màu xanh lá điểm nhấn
+                color: primaryGreen,
               ),
             ),
           ],
@@ -262,13 +257,16 @@ class ConfirmationScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildConfirmButton() {
+  Widget _buildConfirmButton(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       height: 55,
       child: ElevatedButton(
         onPressed: () {
-          // Xử lý xác nhận đơn hàng
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const OrderTrackingScreen()),
+          );
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryGreen,

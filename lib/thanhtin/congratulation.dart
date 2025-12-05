@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // QUAN TRỌNG: Dòng này giúp file này nhìn thấy màn hình Preparing Order
-import 'package:flutter_project_new/thanhtin/preparing_order.dart';
+import 'package:DeliveryApp/thanhtin/preparing_order.dart';
 
 class CongratulationScreen extends StatelessWidget {
   const CongratulationScreen({super.key});
