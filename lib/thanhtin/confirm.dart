@@ -1,0 +1,292 @@
+import 'package:flutter/material.dart';
+
+class ConfirmationScreen extends StatelessWidget {
+  const ConfirmationScreen({super.key});
+
+  // Màu sắc chủ đạo từ thiết kế
+  final Color primaryGreen = const Color(0xFF6CC51D);
+  final Color darkText = const Color(0xFF1A1A1A);
+  final Color greyText = const Color(0xFF9E9E9E);
+  final Color bgGrey = const Color(0xFFF6F8FC);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 1. Header
+              _buildHeader(),
+              const SizedBox(height: 30),
+
+              // 2. Danh sách món ăn (Items List)
+              // Sử dụng Expanded để phần danh sách có thể cuộn nếu dài,
+              // và đẩy phần thanh toán xuống dưới.
+              Expanded(
+                child: ListView(
+                  children: [
+                    _buildCartItem(
+                      title: "Pizza Calzone European",
+                      price: "\$64",
+                      size: "14”",
+                      quantity: "x2",
+                      imageUrl: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=300&q=80",
+                    ),
+                    const SizedBox(height: 20),
+                    _buildCartItem(
+                      title: "Pizza Calzone European",
+                      price: "\$64",
+                      size: "14”",
+                      quantity: "x2",
+                      imageUrl: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=300&q=80",
+                    ),
+                  ],
+                ),
+              ),
+
+              // 3. Thông tin thanh toán (Price Details)
+              const SizedBox(height: 20),
+              _buildPriceDetails(),
+
+              // 4. Nút Confirm
+              const SizedBox(height: 30),
+              _buildConfirmButton(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // --- Widgets con ---
+
+  Widget _buildHeader() {
+    return Row(
+      children: [
+        Container(
+          width: 45,
+          height: 45,
+          decoration: BoxDecoration(
+            color: const Color(0xFFF2F4F8),
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(Icons.arrow_back_ios_new, size: 20, color: Colors.black),
+        ),
+        const SizedBox(width: 20),
+        Text(
+          "Confirmation",
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: darkText,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCartItem({
+    required String title,
+    required String price,
+    required String size,
+    required String quantity,
+    required String imageUrl,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        // Hiệu ứng bóng nhẹ giống style card trong ảnh
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.05),
+            spreadRadius: 1,
+            blurRadius: 10,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Ảnh món ăn
+          Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              image: DecorationImage(
+                image: NetworkImage(imageUrl),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(width: 15),
+
+          // Thông tin chi tiết
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500, // Medium weight
+                    color: Colors.grey[800],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  price,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: darkText,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  size,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: greyText,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Số lượng
+          Padding(
+            padding: const EdgeInsets.only(top: 40), // Căn chỉnh xuống dưới một chút
+            child: Text(
+              quantity,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: darkText,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPriceDetails() {
+    return Column(
+      children: [
+        _buildInfoRow("Original:", "\$96"),
+        const SizedBox(height: 15),
+        _buildInfoRow("Discount:", "\$10"),
+        const SizedBox(height: 15),
+
+        // Dòng Payment method có logo Mastercard
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Payment method:",
+              style: TextStyle(fontSize: 16, color: greyText),
+            ),
+            Row(
+              children: [
+                Text(
+                  "Mastercard",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: darkText,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Image.network(
+                  'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png',
+                  width: 30,
+                  height: 20, // Kích thước nhỏ cho icon
+                  fit: BoxFit.contain,
+                ),
+              ],
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 25),
+        const Divider(color: Color(0xFFEEEEEE), thickness: 1),
+        const SizedBox(height: 15),
+
+        // Tổng tiền
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Total:",
+              style: TextStyle(fontSize: 16, color: greyText),
+            ),
+            Text(
+              "\$86",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: primaryGreen, // Màu xanh lá điểm nhấn
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildInfoRow(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: TextStyle(fontSize: 16, color: greyText),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: darkText,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildConfirmButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: 55,
+      child: ElevatedButton(
+        onPressed: () {
+          // Xử lý xác nhận đơn hàng
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: primaryGreen,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          elevation: 0,
+        ),
+        child: const Text(
+          "CONFIRM",
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 0.5,
+          ),
+        ),
+      ),
+    );
+  }
+}
