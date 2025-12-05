@@ -1,3 +1,4 @@
+import 'package:DeliveryApp/nav_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:DeliveryApp/thanhtin/confirm.dart';
 
@@ -54,14 +55,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget _buildHeader() {
     return Row(
       children: [
-        Container(
-          width: 45,
-          height: 45,
-          decoration: BoxDecoration(
-            color: const Color(0xFFF2F4F8),
-            shape: BoxShape.circle,
+        GestureDetector(
+          onTap: () {
+            context.pop();
+          },
+          child: Container(
+            width: 45,
+            height: 45,
+            decoration: BoxDecoration(
+              color: const Color(0xFFF2F4F8),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.arrow_back_ios_new, size: 20, color: Colors.black),
           ),
-          child: const Icon(Icons.arrow_back_ios_new, size: 20, color: Colors.black),
         ),
         const SizedBox(width: 20),
         Text(

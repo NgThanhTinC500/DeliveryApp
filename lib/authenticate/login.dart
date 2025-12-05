@@ -1,3 +1,4 @@
+import 'package:DeliveryApp/location/access_location_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:DeliveryApp/splash/splash_screen.dart';
 
@@ -154,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => SplashScreen()),
+                              MaterialPageRoute(builder: (context) => AccessLocationScreen()),
                             );
                           },
                           style: ElevatedButton.styleFrom(
