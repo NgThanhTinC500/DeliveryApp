@@ -1,5 +1,6 @@
+import 'package:DeliveryApp/baodg/congratulation_screen.dart';
+import 'package:DeliveryApp/baodg/order_tracking_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:DeliveryApp/thanhtin/preparing_order.dart';
 
 class ConfirmationScreen extends StatelessWidget {
   const ConfirmationScreen({super.key});
@@ -265,7 +266,7 @@ class ConfirmationScreen extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const OrderTrackingScreen()),
+            MaterialPageRoute(builder: (context) => const CongratulationScreen()),
           );
         },
         style: ElevatedButton.styleFrom(

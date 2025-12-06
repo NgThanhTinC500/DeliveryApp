@@ -1,33 +1,35 @@
 name: DeliveryApp
-description: "A new Flutter project."
+description: 'A new Flutter project.'
 publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.10.1
+    sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  flutter:
-    sdk: flutter
-  cupertino_icons: ^1.0.8
-  google_fonts: ^6.2.1
+    flutter:
+        sdk: flutter
+    cupertino_icons: ^1.0.8
+    google_fonts: ^6.2.1
+    flutter_svg: ^2.1.0
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^6.0.0
+    flutter_test:
+        sdk: flutter
+    flutter_lints: ^5.0.0
 
 flutter:
-  uses-material-design: true
+    uses-material-design: true
 
-  assets:
-    - lib/location/location.png
-    - lib/splash/foodlogo_1.png
-    - lib/onboarding/onboarding1.png
-    - lib/onboarding/onboarding2.png
-    - lib/offer/congra_effect.png
-    - lib/search/pizza1.png
-    - lib/search/pizza2.png
-    - lib/home/pizza_ic.png
-    - lib/home/hot_dog_ic.png
+    assets:
+      - assets/
+      - lib/location/location.png
+      - lib/splash/foodlogo_1.png
+      - lib/onboarding/onboarding1.png
+      - lib/onboarding/onboarding2.png
+      - lib/offer/congra_effect.png
+      - lib/search/pizza1.png
+      - lib/search/pizza2.png
+      - lib/home/pizza_ic.png
+      - lib/home/hot_dog_ic.png

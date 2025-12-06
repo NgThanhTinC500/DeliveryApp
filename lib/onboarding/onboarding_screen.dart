@@ -1,3 +1,4 @@
+import 'package:DeliveryApp/authenticate/login.dart';
 import 'package:flutter/material.dart';
 import 'package:DeliveryApp/location/access_location_screen.dart';
 
@@ -76,7 +77,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           if (_currentPage == onboardingData.length - 1) {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => const AccessLocationScreen()),
+                              MaterialPageRoute(builder: (context) => const LoginPage()),
                             );
                           } else {
                             _pageController.nextPage(
@@ -102,7 +103,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       onPressed: () {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => const AccessLocationScreen()),
+                          MaterialPageRoute(builder: (context) => LoginPage()),
                         );
                       },
                       child: const Text(
